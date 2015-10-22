@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/pantheon-systems/baryon/tree/master.svg?style=svg&circle-token=92ed13ff052f213b007977e8ef356831b9c63e0d)](https://circleci.com/gh/pantheon-systems/baryon/tree/master)
+
 Baryon
 -----
 Chef cookbook compositor (aka universe endpoint)
