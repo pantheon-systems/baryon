@@ -4,13 +4,11 @@ Baryon
 -----
 Chef cookbook compositor (aka universe endpoint)
 
-This is an implementation of a chef-universe server that layers sources.
-Right now it uses Github releases/tags as the primary source for cookbook
-information. Then layers the supermarket universe data behind the Github
-data. This lets you effectively 'namespace' your cookbooks. More backend
-sources and more merge strategies are planned to be implemented. It also
-provides a Github hook endpoint for updating cookbook data as well as
-poling Github on a sync interval.
+This is an implementation of the Chef Universe server API that layers and combines multiple universe sources like the Chef Supermarket and GitHub organizations.
+
+By default Baryon makes use of GitHub releases (tags) as the primary source for cookbook version information. Any remaining dependencies are resolved with the community Supermarket data. This provides a simple mechanism to combine private version controlled storage with public community cookbooks, with preference for the internal name-space.
+
+A GitHub web-hook endpoint for processing cookbook version data (typically automatic tagging during continuous integration) as well as polling GitHub repositories on a sync interval is provided.
 
 Features:
   * Exclusive Merge of sources (Github org before supermarket universe)
