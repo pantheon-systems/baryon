@@ -3,8 +3,10 @@ APP=baryon
 
 all: deps test build
 
+list:
+	@make -rqp | awk -F':' '/^[a-zA-Z0-9][^$$#\/\t=]*:([^=]|$$)/ {split($$1,A,/ /);for(i in A)print A[i]}' | sort | uniq
+
 deps: gvt_install
-deps:
 	gvt rebuild
 
 test:
@@ -36,13 +38,25 @@ update_secrets:
 update_rc:
 	kubectl get rc/baryon && kubectl replace -f deploy/gce/baryon-rc.yml ||  kubectl create -f deploy/gce/baryon-rc.yml
 
+release_deps:
+	go get github.com/aktau/github-release
+	go get -u github.com/pantheon-systems/autotag
+
+release: release_deps
+release: TAG=$(shell autotag -n)
 release:
-	 GOOS=linux go build -o baryon-x86_64
+	 @echo "Building release for $(TAG)"
+	 autotag
+	 GOOS=linux go build -o baryon-linux
 	 GOOS=darwin go build -o baryon-darwin
 	 GOOS=windows go build
+	 github-release release -u pantheon-systems -r baryon -t $(TAG) --draft
+	 github-release upload -u pantheon-systems -r baryon -n Linux -f baryon-linux -t $(TAG)
+	 github-release upload -u pantheon-systems -r baryon -n OSX -f baryon-darwin -t $(TAG)
+	 github-release upload -u pantheon-systems -r baryon -n Windows -f baryon.exe -t $(TAG)
+
 
 refresh_deps: gvt_install
-refresh_deps:
 	bash deploy/refresh.sh
 
 gvt_install:
@@ -52,11 +66,9 @@ gvt_install:
 # no reason this can't be quay.io
 #  We pull down root certs, cause the docker image doesn't have them.
 gce: docker
-gce:
 	gcloud docker push gcr.io/$(GOOGLE_PROJECT)/$(APP)
 
 docker: cert build_linux
-docker:
 	docker build -t gcr.io/$(GOOGLE_PROJECT)/$(APP)  .
 
 .PHONY: all
