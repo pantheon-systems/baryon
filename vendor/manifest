@@ -1,0 +1,101 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/bmatsuo/go-jsontree",
+			"repository": "https://github.com/bmatsuo/go-jsontree",
+			"revision": "8a1cc1e88d44390691f69163f6bc597aac267cc3",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/bmatsuo/go-lexer",
+			"repository": "https://github.com/bmatsuo/go-lexer",
+			"revision": "77992e8b5ae71dd3447fb9be3158385c4c2abb4d",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/go-chef/metadata-parser",
+			"repository": "https://github.com/go-chef/metadata-parser",
+			"revision": "fde5a1b3b9506fb3efa52fafefd1927c8f6169a0",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/google/go-github/github",
+			"repository": "https://github.com/google/go-github",
+			"revision": "0d67682ce830f252a1d56215f39b71199036361d",
+			"branch": "master",
+			"path": "/github"
+		},
+		{
+			"importpath": "github.com/google/go-querystring/query",
+			"repository": "https://github.com/google/go-querystring",
+			"revision": "547ef5ac979778feb2f760cdb5f4eae1a2207b86",
+			"branch": "master",
+			"path": "/query"
+		},
+		{
+			"importpath": "github.com/hashicorp/go-version",
+			"repository": "https://github.com/hashicorp/go-version",
+			"revision": "2b9865f60ce11e527bd1255ba82036d465570aa3",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/jessevdk/go-flags",
+			"repository": "https://github.com/jessevdk/go-flags",
+			"revision": "1acbbaff2f347c412a0c7884873bd72cc9c1f5b4",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/jpillora/backoff",
+			"repository": "https://github.com/jpillora/backoff",
+			"revision": "2ff7c4694083b5dbd71b21fd7cb7577477a74b31",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/julienschmidt/httprouter",
+			"repository": "https://github.com/julienschmidt/httprouter",
+			"revision": "dc1fe666a058716f962aaabbb3e55fb825266f97",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/wblakecaldwell/profiler",
+			"repository": "https://github.com/wblakecaldwell/profiler",
+			"revision": "6111ef1313a14d223d3056a6baa653ea5a6672a8",
+			"branch": "master"
+		},
+		{
+			"importpath": "golang.org/x/net/context",
+			"repository": "https://go.googlesource.com/net",
+			"revision": "01256db42e5106196a3473ec1620727a383500e8",
+			"branch": "master",
+			"path": "/context"
+		},
+		{
+			"importpath": "golang.org/x/oauth2",
+			"repository": "https://go.googlesource.com/oauth2",
+			"revision": "2fbf3d7329d847b125188ad64b68cfb1f548938a",
+			"branch": "master"
+		},
+		{
+			"importpath": "golang.org/x/oauth2/internal",
+			"repository": "https://go.googlesource.com/oauth2",
+			"revision": "2fbf3d7329d847b125188ad64b68cfb1f548938a",
+			"branch": "master",
+			"path": "/internal"
+		},
+		{
+			"importpath": "google.golang.org/cloud/compute/metadata",
+			"repository": "https://code.googlesource.com/gocloud",
+			"revision": "253b8fdc700b7dd3ccac674fe3697bb5f1a49fab",
+			"branch": "master",
+			"path": "/compute/metadata"
+		},
+		{
+			"importpath": "google.golang.org/cloud/internal",
+			"repository": "https://code.googlesource.com/gocloud",
+			"revision": "253b8fdc700b7dd3ccac674fe3697bb5f1a49fab",
+			"branch": "master",
+			"path": "/internal"
+		}
+	]
+}

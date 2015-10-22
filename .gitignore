@@ -1,0 +1,12 @@
+*.crt
+*.cert
+*.csr
+*.pem
+*.key
+baryon
+baryon.exe
+baryon-*
+env
+
+vendor/**
+!vendor/manifest
