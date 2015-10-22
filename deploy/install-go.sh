@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -e
 
 if [  -d "$HOME/go1.5" ] ; then
   echo "go 1.5 installed skipping"

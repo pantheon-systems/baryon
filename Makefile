@@ -1,5 +1,4 @@
 GO15VENDOREXPERIMENT=1
-GOOGLE_PROJECT=pantheon-internal
 APP=baryon
 
 all: deps test build

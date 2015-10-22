@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -xe
+set -e
 
 # ensure we have autotag
 if [ ! -d "$HOME/bin" ]; then

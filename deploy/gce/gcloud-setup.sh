@@ -9,7 +9,7 @@
 #   CLOUDSDK_COMPUTE_ZONE  # The compute zone container the GKE container cluster to deploy into
 #   CLUSTER_ID             # ID of the GKE container cluster to deploy into
 
-set -ex
+set -e
 
 if [ "$CIRCLECI" != "true" ]; then
   echo "This script is only intended to run on Circle-CI."
