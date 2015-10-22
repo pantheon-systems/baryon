@@ -22,17 +22,6 @@ Features:
 ## Getting Started
 Pull a release from releases for your architecture.
 
-### Build from source
-This project is using the Go 1.5 vendor experiment to manage dependencies. Fetch the repo source per normal with go get:
-```Shell
-go get github.com/pantheon-systems/baryon
-```
-
-#### Vendored Deps
-Then run `make` in the source directory. Make will 'go get' gvt, which is used to manage vendoring dependencies into the `./vendor` directory, and build from source
-```Shell
-cd $GOPATH/src/github.com/pantheon-systems/baryon && make
-```
 
 ## How to use
  The most simple setup is to just `./baryon -p 80 -o mygithuborg -t mytoken -s hooksecret` this starts a server that will listen on port 80, and index 'mygithuborg' using your github token and waiting for github hook payloads with 'hooksecret' as githubs auth request to baryon.
@@ -58,3 +47,19 @@ Application Options:
 Help Options:
   -h, --help        Show this help message
 ```
+
+
+## Build from source
+This project is using the Go 1.5 vendor experiment to manage dependencies. Fetch the repo source per normal with go get:
+```Shell
+go get github.com/pantheon-systems/baryon
+```
+
+#### Vendored Deps
+Then run `make` in the source directory. Make will 'go get' gvt, which is used to manage vendoring dependencies into the `./vendor` directory, and build from source
+```Shell
+cd $GOPATH/src/github.com/pantheon-systems/baryon && make
+```
+
+## Contributing
+See the [CONTRIBUTING.md](CONTRIBUTING.md) documentation
