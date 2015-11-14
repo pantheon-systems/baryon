@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-version"
+	"github.com/julienschmidt/httprouter"
 )
 
 const altVersionRegexRaw string = `^v([\d]+\.?.*)`
@@ -132,7 +133,19 @@ func (u *Universe) Handler(w http.ResponseWriter, r *http.Request) {
 		log.Println("Error while trying to marshal universe data: ", err)
 		return
 	}
+	w.Write(data)
+}
+
+func (u *Universe) CookBookHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
+	cookbook := ps.ByName("cook")
+	data, err := json.Marshal(u.Universe[cookbook])
+	if err != nil {
+		msg := fmt.Sprintf("error processing universe data for cookbook '%s'", cookbook)
+		http.Error(w, msg, http.StatusInternalServerError)
+		log.Println(msg, err)
+		return
+	}
 	w.Write(data)
 }
 
