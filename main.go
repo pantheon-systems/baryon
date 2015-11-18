@@ -70,6 +70,8 @@ func main() {
 	ghook.Path = "/hook"
 
 	router.GET("/", rootHandler)
+	// can see a post or refresh or purge going here as well
+	router.GET("/cookbook/:cook", u.CookBookHandler)
 
 	router.HandlerFunc("GET", "/profiler/info.html", profiler.MemStatsHTMLHandler)
 	router.HandlerFunc("GET", "/profiler/info", profiler.ProfilingInfoJSONHandler)
