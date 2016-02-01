@@ -14,16 +14,20 @@ Features:
   * Exclusive Merge of sources (Github org before supermarket universe)
   * GitHub hook Universe updates
   * understands tags beyond /^v\d.\d.\d/
-  * Efficient usage of Github api
-  * Stable service
+  * Efficient usage of GitHub API
+  * TLS support
+  * Stable
 
 ## Getting Started
-Pull a release from releases for your architecture.
-
+Download a release for your architecture, and run it.
 
 ## How to use
- The most simple setup is to just `./baryon -p 80 -o mygithuborg -t mytoken -s hooksecret` this starts a server that will listen on port 80, and index 'mygithuborg' using your github token and waiting for github hook payloads with 'hooksecret' as githubs auth request to baryon.
+ The most simple setup is to just `./baryon -p 80 -o mygithuborg -t mytoken -s hooksecret` this starts a server that will listen on port 80, and index 'mygithuborg' using your GitHub token and waiting for GitHub hook payloads with 'hooksecret' as GitHub's auth request to baryon.
 
+### Github Repo Permissions
+The token you use for baryon needs to have access to private repositories if you expect it to index private cookbooks. It only needs to read from repositories however.
+
+### Command Switches
 ```
   ./baryon --help
 Usage:
@@ -37,7 +41,7 @@ Application Options:
   -c, --cert=       Cert file for TLS [$BARYON_CERT]
   -o, --org=        Github Org to find cookbooks [$BARYON_GITHUB_ORG]
   -t, --token=      Github API token to use when connecting [$BARYON_GITHUB_TOKEN]
-  -i, --interval=   Interval to perform full sync against github repos. Supports Golang duration formatting '1h2m'... etc. (12h)
+  -i, --interval=   Interval to perform full sync against GitHub repos. Supports Golang duration formatting '1h2m'... etc. (12h)
                     [$BARYON_INTERVAL]
       --no-sync     Do NOT perform a github scan/sync when starting. Periodic sync will still fire [$BARYON_NOSYNC]
       --berks-only  Only use berks compatable version tags in the universe [$BARYON_BERKSONLY]
@@ -45,7 +49,6 @@ Application Options:
 Help Options:
   -h, --help        Show this help message
 ```
-
 
 ## Build from source
 This project is using the Go 1.5 vendor experiment to manage dependencies. Fetch the repo source per normal with go get:
