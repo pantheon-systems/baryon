@@ -7,6 +7,7 @@ baryon
 baryon.exe
 baryon-*
 env
+coverage.out
 
 vendor/**
 !vendor/manifest

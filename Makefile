@@ -12,6 +12,17 @@ deps: gvt_install
 test:
 	go test
 
+cov:
+	go get github.com/pierrre/gotestcover
+	go get github.com/mattn/goveralls
+	gotestcover -coverprofile=coverage.out $$(go list ./... | grep -v /vendor/)
+
+coveralls: cov
+	goveralls -repotoken $$COVERALLS_TOKEN -service=circleci -coverprofile=coverage.out
+
+cov_html: cov
+	go tool cover -html=coverage.out
+
 build:
 	go build
 

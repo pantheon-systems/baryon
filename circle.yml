@@ -21,6 +21,11 @@ dependencies:
   pre:
     - make circle_deps
 
+test:
+  post:
+    ## set COVERALLS_TOKEN environment variable on circleci.com
+    - make coveralls
+
 general:
   artifacts:
     - baryon
