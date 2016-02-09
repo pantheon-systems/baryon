@@ -1,4 +1,5 @@
 [![Circle CI](https://circleci.com/gh/pantheon-systems/baryon/tree/master.svg?style=svg&circle-token=92ed13ff052f213b007977e8ef356831b9c63e0d)](https://circleci.com/gh/pantheon-systems/baryon/tree/master)
+[![Coverage Status](https://coveralls.io/repos/github/pantheon-systems/baryon/badge.svg?branch=master)](https://coveralls.io/github/pantheon-systems/baryon?branch=master)
 
 Baryon
 -----
