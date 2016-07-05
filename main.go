@@ -119,7 +119,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	fmt.Fprintf(w, "OHAI")
 }
 
-// Generic request logging, cause thats probably a good idea
+// Log adds Generic request logging as a handler, cause thats probably a good idea
 func Log(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		ff := r.Header.Get("X-Forwarded-For")
