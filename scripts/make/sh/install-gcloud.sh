@@ -18,7 +18,7 @@ fi
 export CLOUDSDK_CORE_DISABLE_PROMPTS=1
 export CLOUDSDK_PYTHON_SITEPACKAGES=0
 
-gcloud="$HOME/google-cloud-sdk/bin/gcloud --no-user-output-enabled"
+gcloud="$HOME/google-cloud-sdk/bin/gcloud -q --no-user-output-enabled"
 PATH="$gcloud/bin:$PATH"
 
 if [ ! -d "$HOME/google-cloud-sdk" ]; then

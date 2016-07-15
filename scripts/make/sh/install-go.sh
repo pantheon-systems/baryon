@@ -28,7 +28,7 @@
 #     overide:
 #       - bash scripts/install-go.sh
 #
-set -e
+set -ex
 
 if [ "$CIRCLECI" != "true" ]; then
   echo "This script meant to only be run on CIRCLECI"
