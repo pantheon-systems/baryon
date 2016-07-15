@@ -1,6 +1,5 @@
 REGISTRY ?= quay.io/getpantheon
 
-
 # determinse the docker tag to build
 ifeq ($(CIRCLE_BUILD_NUM),)
   BUILD_NUM := dev
@@ -49,4 +48,4 @@ psuh-circle:: setup-quay
 
 # extend or define circle deps to install gcloud
 deps-circle:: 
-	bash scripts/make/sh/install-gcloud.sh
+	@bash scripts/make/sh/install-gcloud.sh

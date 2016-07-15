@@ -24,7 +24,7 @@ test:: ## run go tests
 test-circle:: test test-coveralls ## invoke test tasks for CI
 
 deps-circle:: ## install Golang and pull dependencies in CI
-	bash scripts/make/sh/install-go.sh
+	@bash scripts/make/sh/install-go.sh
 deps-circle:: deps
 
 deps-coverage::

@@ -1,13 +1,10 @@
+---
 machine:
   environment:
-    CLOUDSDK_COMPUTE_ZONE: us-central1-b
-    CLOUDSDK_CORE_DISABLE_PROMPTS: 1
-    CLOUDSDK_PYTHON_SITEPACKAGES: 0
     GOVERSION: 1.6.2
     GOPATH: /home/ubuntu/go_workspace
     GOROOT: /home/ubuntu/go
     PATH: /home/ubuntu/google-cloud-sdk/bin:/home/ubuntu/go/bin:$GOPATH/bin:$PATH
-
   python:
     version: 2.7.3
   services:
@@ -16,7 +13,9 @@ machine:
 dependencies:
   cache_directories:
     - ~/google-cloud-sdk
-    - ~/go
+    - ../go-workspace
+    - ../go
+    - vendor
     - ~/bin
 
   pre:

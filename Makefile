@@ -34,3 +34,10 @@ update_deployment: ## update the kube Deployer
 	    -e "s/__BRANCH__/$(KUBE_ENV)/" \
 	    scripts/deployment.template \
 	    | kubectl apply --namespace=$(KUBE_ENV) -f -
+
+update_service: ## update the kube service
+	@sed -e "s#__IMAGE__#$(IMAGE)#" \
+	    -e "s/__BRANCH__/$(KUBE_ENV)/" \
+	    scripts/service.template \
+	    | kubectl apply --namespace=$(KUBE_ENV) -f -
+
