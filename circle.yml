@@ -18,8 +18,10 @@ dependencies:
     - vendor
     - ~/bin
 
-  pre:
+  override:
     - make deps-circle
+    - make deps
+    - make deps-coverage
 
 test:
   post:

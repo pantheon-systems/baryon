@@ -28,6 +28,7 @@
 #     overide:
 #       - bash scripts/install-go.sh
 #
+
 set -ex
 
 if [ "$CIRCLECI" != "true" ]; then
