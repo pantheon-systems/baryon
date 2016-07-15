@@ -4,12 +4,13 @@ build:: ## build project for current arch
 build-linux:: _fetch-cert ## build project for linux
 	GOOS=linux CGO_ENABLED=0 go build -ldflags="-s -w"
 
-build-docker::
-ifndef  $(DOCKER)
+# if there is a docker file then set the docker variable so things can trigger off it
+build-docker:: ## build the docker container if the dockerfile exists
+ifeq ("$(wildcard $(CURDIR)/Dockerfile)","")
 	$(error "Docker task called, but no DOCKER variable set. Eitehr Dockerfile is missing or you didn't include common.")
-endif
-build-docker:: build-linux ## build the docker container 
+else
 	docker build -t $(IMAGE) .
+endif
 
 build-circle:: build-linux ## build project for linux. If you need docker you will have to invoke that with an extension
 
@@ -31,7 +32,9 @@ deps-coverage::
 	go get github.com/mattn/goveralls
 
 deps-status:: ## check status of deps with gostatus
+ifeq (, $(shell which gostatus))
 	go get -u github.com/shurcooL/gostatus
+endif
 	go list -f '{{join .Deps "\n"}}' . | gostatus -stdin -v
 
 test-coveralls:: deps-coverage ## run coverage and report to coveralls
