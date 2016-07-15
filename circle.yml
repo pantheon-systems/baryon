@@ -24,6 +24,8 @@ dependencies:
     - make deps-coverage
 
 test:
+  override:
+    - make test
   post:
     - make test-coveralls
 
