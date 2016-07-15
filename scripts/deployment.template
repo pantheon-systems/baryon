@@ -1,0 +1,65 @@
+# vim: set ft=yaml:
+# -*- mode: yaml -*-
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: baryon
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: baryon
+      branch: __BRANCH__
+      state: serving
+
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+
+  template:
+    metadata:
+      labels:
+        app: baryon
+        branch: __BRANCH__
+        state: serving
+    spec:
+      volumes:
+        - name: baryon-ssl
+          secret:
+            secretName: baryon-ssl
+        - name: baryon-secrets
+          secret:
+            secretName: gbaryon-secrets
+
+      containers:
+        - name: baryon
+          image: __IMAGE__
+          imagePullPolicy: Always
+          dnsPolicy: ClusterFirst
+          restartPolicy: Always
+          env:
+            - name: BARYON_GITHUB_ORG
+              value: pantheon-cookbooks
+            - name: BARYON_BERKSONLY
+              value: "true"
+            - name: BARYON_KEY
+              value: /etc/baryon-ssl/key
+            - name: BARYON_CERT
+              value: /etc/baryon-ssl/cert
+          volumeMounts:
+            - name: baryon-ssl
+              mountPath: /etc/baryon-ssl
+            - name: baryon-secrets
+              mountPath: /etc/baryon-secrets
+          ports:
+            - containerPort: 8888
+              protocol: TCP
+          resources:
+            requests:
+              memory: "64Mi"
+            limits:
+              memory: "500Mi"
+              cpu: "500m"

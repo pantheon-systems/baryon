@@ -20,12 +20,11 @@ dependencies:
     - ~/bin
 
   pre:
-    - make circle_deps
+    - make deps-circle
 
 test:
   post:
-    ## set COVERALLS_TOKEN environment variable on circleci.com
-    - make coveralls
+    - make test-coveralls
 
 general:
   artifacts:
@@ -37,5 +36,4 @@ deployment:
       - master
       - deploy
     commands:
-      - make gce
       - make deploy
