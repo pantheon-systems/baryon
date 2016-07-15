@@ -18,7 +18,7 @@ fi
 export CLOUDSDK_CORE_DISABLE_PROMPTS=1
 export CLOUDSDK_PYTHON_SITEPACKAGES=0
 
-gcloud="$HOME/google-cloud-sdk/bin/gcloud"
+gcloud="$HOME/google-cloud-sdk/bin/gcloud --no-user-output-enabled"
 PATH="$gcloud/bin:$PATH"
 
 if [ ! -d "$HOME/google-cloud-sdk" ]; then
@@ -29,21 +29,23 @@ if [ ! -d "$HOME/google-cloud-sdk" ]; then
   tar -C "$HOME/" -xzvf ~/google-cloud-sdk.tar.gz
   bash "$HOME/google-cloud-sdk/install.sh"
 
-  $gcloud components update
+  $gcloud components update 
   $gcloud components update kubectl
 fi
 
-$gcloud config set project $CLOUDSDK_CORE_PROJECT
-$gcloud config set compute/zone $CLOUDSDK_COMPUTE_ZONE
-$gcloud config set container/cluster $CLUSTER_ID
+echo "Setting Project"
+$gcloud config set project "$CLOUDSDK_CORE_PROJECT"
+echo "Setting Zone"
+$gcloud config set compute/zone "$CLOUDSDK_COMPUTE_ZONE"
+echo "Setting Cluster"
+$gcloud config set container/cluster "$CLUSTER_ID"
 
-
-echo $GCLOUD_KEY | base64 --decode > gcloud.json
-$gcloud auth activate-service-account $GCLOUD_EMAIL --key-file gcloud.json
+echo "$GCLOUD_KEY" | base64 --decode > gcloud.json
+$gcloud auth activate-service-account "$GCLOUD_EMAIL" --key-file gcloud.json
 
 sshkey="$HOME/.ssh/google_compute_engine"
 if [ ! -f "$sshkey" ] ; then
-  ssh-keygen -f $sshkey -N ""
+  ssh-keygen -f "$sshkey" -N ""
 fi
 
 $gcloud container clusters get-credentials "$CLUSTER_ID" --project="$CLOUDSDK_CORE_PROJECT"
