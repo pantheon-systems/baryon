@@ -1,10 +1,6 @@
-FROM alpine
+FROM scratch
 ADD ca-certificates.crt /etc/ssl/certs/
-
-
 COPY baryon /
-COPY deploy/baryon.sh /baryon.sh
-RUN chmod 755 /baryon.sh /baryon
 
 EXPOSE 8888
-ENTRYPOINT exec /baryon.sh
+ENTRYPOINT ["/baryon", "-p 8888"]

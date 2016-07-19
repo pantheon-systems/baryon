@@ -29,7 +29,6 @@ func init() {
 }
 
 // Universe is the struct that holds the universe data and config
-
 type Universe struct {
 	// ugh ruby     cook    version   data
 	Universe map[string]map[string]Entry
@@ -42,18 +41,20 @@ type Config struct {
 	BerksOnly bool
 }
 
+// Entry a version entry for an artifact that matches the expect Universe output format
 type Entry struct {
 	//	EndpointPriority int               `json:"endpoint_priority"`
 	// Platforms    map[string]string `json:"platforms"`
 	Dependencies map[string]string `json:"dependencies"`
 	LocationType string            `json:"location_type"`
 	LocationPath string            `json:"location_path"`
-	DownloadUrl  string            `json:"download_url"`
+	DownloadURL  string            `json:"download_url"`
 	source       string
 	name         string
 	version      version.Version
 }
 
+// ResolvedEntry is an artifact entry in the Universe cache with metadata
 type ResolvedEntry struct {
 	Source  string
 	Name    string
@@ -70,6 +71,7 @@ func NewCache(conf Config) *Universe {
 	return &u
 }
 
+// AddEntry allows you to add a resolved entry to the universe cache
 func (u *Universe) AddEntry(r ResolvedEntry) {
 	// we don't want to expose this in the json, but we want to cary this info
 	r.Entry.source = r.Source
@@ -102,7 +104,7 @@ func (u *Universe) AddEntry(r ResolvedEntry) {
 }
 
 func (r ResolvedEntry) String() string {
-	return fmt.Sprintf("Name=%s Version=%s Dependencies=%v LocationType=%s LocationPath=%s DownloadUrl=%s", r.Name, r.Version.String(), r.Entry.Dependencies, r.Entry.LocationType, r.Entry.LocationPath, r.Entry.DownloadUrl)
+	return fmt.Sprintf("Name=%s Version=%s Dependencies=%v LocationType=%s LocationPath=%s DownloadURL=%s", r.Name, r.Version.String(), r.Entry.Dependencies, r.Entry.LocationType, r.Entry.LocationPath, r.Entry.DownloadURL)
 }
 
 // ParseVersion returns a version object from a parsed string. This normalizes semver strings, and adds the ability to parse strings with 'v' leader. so that `v1.0.1`-> `1.0.1`  which we need for berkshelf to work
@@ -123,7 +125,7 @@ func ParseVersion(v string) (*version.Version, error) {
 	return nVersion, nil
 }
 
-// universeHandler responds with the current known universe of cookbook metadata
+// Handler responds with the current known universe of cookbook metadata
 // https://github.com/chef/chef-rfc/blob/master/rfc0)14-universe-endpoint.md
 func (u *Universe) Handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
@@ -136,6 +138,7 @@ func (u *Universe) Handler(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
+// CookBookHandler will report a cookbooks entry in the universe cache
 func (u *Universe) CookBookHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	w.Header().Set("Content-Type", "application/json")
 	cookbook := ps.ByName("cook")
@@ -149,13 +152,14 @@ func (u *Universe) CookBookHandler(w http.ResponseWriter, r *http.Request, ps ht
 	w.Write(data)
 }
 
-func (u Universe) ServiceInfo() map[string]interface{} {
+// ServiceInfo exposes some stats about the cache
+func (u *Universe) ServiceInfo() map[string]interface{} {
 	gCount := 0
 	sCount := 0
 	total := 0
 	for _, data := range u.Universe {
 		for _, entry := range data {
-			total += 1
+			total++
 			if entry.LocationType == "github" {
 				gCount++
 			} else {

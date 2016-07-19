@@ -27,6 +27,7 @@ const (
 	upperAPIlimit = 2000
 )
 
+// Source is the source struct for github  that we implement the univserse source interface with
 type Source struct {
 	client    *github.Client
 	Conf      Config
@@ -34,13 +35,22 @@ type Source struct {
 	exBackoff *backoff.Backoff
 }
 
+// Config is the gh source configuration
 type Config struct {
-	Token        string
-	MaxVersions  int
-	Org          string
+	// The github Token to use
+	Token string
+
+	// the max versions pre repo to store
+	MaxVersions int
+
+	// The github org to scan for cookbooks
+	Org string
+
+	// The interval between full org syncs
 	SyncInterval time.Duration
 }
 
+// RepoVersion is what we detect on a githubrepo as a version
 type RepoVersion struct {
 	Name    string
 	Org     string
@@ -49,6 +59,7 @@ type RepoVersion struct {
 	URL     string
 }
 
+// New is the github source constructor
 func New(conf Config, universe *universe.Universe) Source {
 	// add client
 	ts := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: conf.Token})
@@ -65,10 +76,12 @@ func New(conf Config, universe *universe.Universe) Source {
 	return gs
 }
 
+// Name returns this sources name
 func (g Source) Name() string {
 	return sourceName
 }
 
+// SyncInterval exposes the sync timer on this source
 func (g Source) SyncInterval() time.Duration {
 	return g.Conf.SyncInterval
 }
@@ -154,13 +167,13 @@ func (g Source) processRepoTags(repo github.Repository) {
 		}
 
 		g.AddRepoRelease(rv)
-		successCount += 1
+		successCount++
 	}
 
 	return
 }
 
-// Process Repo Release manages adding a release to the universe cache
+// AddRepoRelease manages adding a release to the universe cache
 func (g Source) AddRepoRelease(r RepoVersion) {
 	log.Printf("Adding: repo=%s:%s version=%s tag=%s", r.Org, r.Name, r.Version.String(), r.Tag)
 	g.maybeBackoff()
@@ -231,15 +244,20 @@ func (g Source) AddRepoRelease(r RepoVersion) {
 	// For now we do this by hand. potentially could get this from releases on the repo, but this is a static format
 	// https://github.com/pantheon-cookbooks/pipe_tester/archive/v1.1.1.tar.gz
 	// This should be t.TarballURL
-	entry.DownloadUrl = fmt.Sprintf("https://github.com/%s/%s/archive/%s.tar.gz", r.Org, r.Name, r.Tag)
-	entry.LocationPath = entry.DownloadUrl
+	entry.DownloadURL = fmt.Sprintf("https://github.com/%s/%s/archive/%s.tar.gz", r.Org, r.Name, r.Tag)
+	entry.LocationPath = entry.DownloadURL
 	// this is used in chef-server as a path to the cookbook
 	// entry.LocationPath = fmt.Sprintf("https://github.com/%s/%s/tree/%s", r.Org, r.Name, r.Tag)
 
-	g.universe.AddEntry(universe.ResolvedEntry{sourceName, meta.Name, meta.Version, entry})
+	g.universe.AddEntry(universe.ResolvedEntry{
+		Source:  sourceName,
+		Name:    meta.Name,
+		Version: meta.Version,
+		Entry:   entry,
+	})
 }
 
-// eventProcessor runs the loop for watching github events and tossing them over to universe
+// EventProcessor runs the loop for watching github events and tossing them over to universe
 func (g Source) EventProcessor(events <-chan hook.Event) {
 	log.Printf("Starting hook event processor")
 	for {
@@ -259,18 +277,16 @@ func (g Source) EventProcessor(events <-chan hook.Event) {
 			}
 		}
 	}
-	log.Printf("Uh-oh we exited the select in event processor. This shouldn't happen")
 }
 
-// rateLimit is a debug function for outputing API limits
+// RateLimit is a debug function for outputing API limits
 func (g Source) RateLimit() int {
 	rate, _, err := g.client.RateLimit()
 	if err != nil {
 		fmt.Printf("Error fetching rate limit: %+v\n", err)
 		return 0
-	} else {
-		fmt.Println("API Rate Limit: ", rate)
 	}
+	fmt.Println("API Rate Limit: ", rate)
 
 	return rate.Remaining
 }
@@ -292,6 +308,7 @@ func (g Source) maybeBackoff() {
 	}
 }
 
+// RateHandler is a http.Handler which can be used to expose rate limit information about the github source
 func (g Source) RateHandler(w http.ResponseWriter, r *http.Request) {
 	rate, _, err := g.client.RateLimit()
 	if err != nil {

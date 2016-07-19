@@ -1,6 +1,7 @@
-// this is gutted/extended from https://github.com/phayes/hookserve/
-// TODO(jesse): could clean this up alot
 package hook
+
+// this is gutted/extended from https://github.com/phayes/hookserve/
+// TODO(jesse): should clean this up alot
 
 import (
 	"crypto/hmac"
@@ -16,8 +17,10 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// ErrInvalidEventFormat is returned when we can't understand an event that was sent to the hook
 var ErrInvalidEventFormat = errors.New("Unable to parse event string. Invalid Format.")
 
+// Event represents a github event as it is sent to us
 type Event struct {
 	Owner      string // The username of the owner of the repository
 	Repo       string // The name of the repository
@@ -47,6 +50,7 @@ func (e *Event) String() (output string) {
 	return
 }
 
+// Server is the struct for building a hook server on
 type Server struct {
 	Port   int        // Port to listen on. Defaults to 80
 	Path   string     // Path to receive on. Defaults to "/postreceive"
@@ -54,7 +58,7 @@ type Server struct {
 	Events chan Event // Channel of events. Read from this channel to get push events as they happen.
 }
 
-// Create a new server with sensible defaults.
+// NewServer Creates a new server with sensible defaults.
 // By default the Port is set to 80 and the Path is set to `/postreceive`
 func NewServer() *Server {
 	return &Server{
@@ -64,7 +68,7 @@ func NewServer() *Server {
 	}
 }
 
-// Satisfies the extended httpRouter handler interface which has a paramater
+// ServeHTTPRouter Satisfies the extended httpRouter handler interface which has a paramater
 func (s *Server) ServeHTTPRouter(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	s.ServeHTTP(w, r)
 }
