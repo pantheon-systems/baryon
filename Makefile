@@ -6,7 +6,9 @@ include scripts/make/common-docker.mk
 
 release: _deps-release ## run a release (usually from CI)
 release: TAG=$(shell autotag -n)
-release: VERSION=$(TAG) push-circle
+release: VERSION=$(TAG) 
+release: 
+	make push-circle
 #release:
 #	@echo "Building release for $(TAG)"
 #	autotag
