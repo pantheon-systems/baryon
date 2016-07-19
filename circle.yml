@@ -36,6 +36,5 @@ deployment:
   prod:
     branch:
       - master
-      - vet
     commands:
       - make release

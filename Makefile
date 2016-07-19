@@ -10,14 +10,14 @@ release: VERSION=$(shell autotag -n)
 release:
 	@echo "Building release for $(VERSION)"
 	CIRCLE_BUILD_NUM=$(VERSION) make push-circle
-#	autotag
-#	GOOS=linux go build -o baryon-linux
-#	GOOS=darwin go build -o baryon-darwin
-#	GOOS=windows go build
-#	github-release release -u pantheon-systems -r baryon -t $(VERSION) --draft
-#	github-release upload -u pantheon-systems -r baryon -n Linux -f baryon-linux -t $(VERSION)
-#	github-release upload -u pantheon-systems -r baryon -n OSX -f baryon-darwin -t $(VERSION)
-#	github-release upload -u pantheon-systems -r baryon -n Windows -f baryon.exe -t $(VERSION)
+	autotag
+	GOOS=linux go build -o baryon-linux
+	GOOS=darwin go build -o baryon-darwin
+	GOOS=windows go build
+	github-release release -u pantheon-systems -r baryon -t $(VERSION) --draft
+	github-release upload -u pantheon-systems -r baryon -n Linux -f baryon-linux -t $(VERSION)
+	github-release upload -u pantheon-systems -r baryon -n OSX -f baryon-darwin -t $(VERSION)
+	github-release upload -u pantheon-systems -r baryon -n Windows -f baryon.exe -t $(VERSION)
 
 _deps-release: # install tools needed for release, conditionally
 ifneq ("$(wildcard Dockerfile))","")
