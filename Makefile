@@ -18,6 +18,10 @@ release: VERSION=$(TAG) push-circle
 #	github-release upload -u pantheon-systems -r baryon -n OSX -f baryon-darwin -t $(TAG)
 #	github-release upload -u pantheon-systems -r baryon -n Windows -f baryon.exe -t $(TAG)
 
-_deps-release: # install tools needed for release
+_deps-release: # install tools needed for release, conditionally
+ifneq ("$(wildcard Dockerfile))","")
 	go get github.com/aktau/github-release
-	go get -u github.com/pantheon-systems/autotag
+endif
+ifneq ("$(wildcard autotag))","")
+	curl -L https://github.com/pantheon-systems/autotag/releases/download/v0.0.4/autotag.linux.x86_64 -o ~/bin/autotag
+endif
