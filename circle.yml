@@ -4,7 +4,7 @@ machine:
     GOVERSION: 1.6.2
     GOPATH: /home/ubuntu/go_workspace
     GOROOT: /home/ubuntu/go
-    PATH: /home/ubuntu/google-cloud-sdk/bin:/home/ubuntu/go/bin:$GOPATH/bin:$PATH
+    PATH: /home/ubuntu/go/bin:$GOPATH/bin:$PATH
   python:
     version: 2.7.3
   services:
@@ -12,7 +12,6 @@ machine:
 
 dependencies:
   cache_directories:
-    - ~/google-cloud-sdk
     - ../go-workspace
     - ../go
     - vendor
@@ -37,6 +36,6 @@ deployment:
   prod:
     branch:
       - master
-      - deploy
+      - vet
     commands:
-      - make deploy
+      - make release
