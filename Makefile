@@ -6,11 +6,11 @@ include scripts/make/common-go.mk
 include scripts/make/common-docker.mk
 
 release: _deps-release ## run a release (usually from CI)
-release: VERSION=$(shell autotag -n)
+release: VERSION=$(shell ~/bin/autotag -n)
 release:
 	@echo "Building release for $(VERSION)"
 	CIRCLE_BUILD_NUM=$(VERSION) make push-circle
-	autotag
+	~/bin/autotag
 	GOOS=linux go build -o baryon-linux
 	GOOS=darwin go build -o baryon-darwin
 	GOOS=windows go build
@@ -23,7 +23,7 @@ _deps-release: # install tools needed for release, conditionally
 ifneq ("$(wildcard Dockerfile))","")
 	go get github.com/aktau/github-release
 endif
-ifeq ($(shell which autotag)),)
+ifneq ("$(wildcard /home/ubuntu/bin/autotag)", "")
 	curl -L https://github.com/pantheon-systems/autotag/releases/download/v0.0.4/autotag.linux.x86_64 -o ~/bin/autotag
 	chmod 755 ~/bin/autotag
 endif
