@@ -11,7 +11,14 @@ By default Baryon makes use of GitHub releases (tags) as the primary source for 
 
 A GitHub web-hook endpoint for processing cookbook version data (typically automatic tagging during continuous integration) as well as polling GitHub repositories on a sync interval is provided.
 
-Features: * Exclusive Merge of sources (Github org before supermarket universe) * GitHub hook Universe updates * understands tags beyond /^v\d.\d.\d/ * Efficient usage of GitHub API * TLS support * Stable
+Features:
+
+-	Exclusive Merge of sources (Github org before supermarket universe)
+-	GitHub hook Universe updates
+-	understands tags beyond /^v\d.\d.\d/
+-	Efficient usage of GitHub API
+-	TLS support
+-	Stable
 
 Getting Started
 ---------------

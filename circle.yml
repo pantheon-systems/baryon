@@ -4,7 +4,7 @@ machine:
     GOVERSION: 1.6.2
     GOPATH: /home/ubuntu/go_workspace
     GOROOT: /home/ubuntu/go
-    PATH: /home/ubuntu/go/bin:$GOPATH/bin:$PATH
+    PATH: /home/ubuntu/go/bin:$GOPATH/bin:/home/ubuntu/bin:$PATH
   python:
     version: 2.7.3
   services:
