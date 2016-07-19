@@ -7,8 +7,8 @@ include scripts/make/common-docker.mk
 
 release: _deps-release ## run a release (usually from CI)
 release: VERSION=$(shell autotag -n)
-release: 
-	make push-circle
+release:
+	BUILD_NUM=$(shell autotag -n) make push-circle
 #release:
 #	@echo "Building release for $(VERSION)"
 #	autotag
