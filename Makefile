@@ -7,10 +7,9 @@ include scripts/make/common-docker.mk
 
 release: _deps-release ## run a release (usually from CI)
 release: VERSION:=$(shell autotag -n)
-release: BUILD_NUM=$(VERSION) 
-release: push-circle
-#release:
-#	@echo "Building release for $(VERSION)"
+release:
+	@echo "Building release for $(VERSION)"
+	CIRCLE_BUILD_NUM=$(VERSION) make push-circle
 #	autotag
 #	GOOS=linux go build -o baryon-linux
 #	GOOS=darwin go build -o baryon-darwin
@@ -26,4 +25,5 @@ ifneq ("$(wildcard Dockerfile))","")
 endif
 ifneq ("$(wildcard autotag))","")
 	curl -L https://github.com/pantheon-systems/autotag/releases/download/v0.0.4/autotag.linux.x86_64 -o ~/bin/autotag
+	chmod 755 ~/bin/autotag
 endif
