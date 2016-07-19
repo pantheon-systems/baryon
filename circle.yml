@@ -36,5 +36,6 @@ deployment:
   prod:
     branch:
       - master
+      - test-release
     commands:
       - make release
