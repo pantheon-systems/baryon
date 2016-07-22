@@ -34,7 +34,7 @@ func main() {
 		Token:        config.Opts.Token,
 		Org:          config.Opts.Org,
 		SyncInterval: config.Opts.SyncInterval,
-		MaxVersions:  5,
+		MaxVersions:  config.Opts.MaxGithubVersions,
 	}
 	ghs := gh.New(ghsConfig, u)
 	var wg sync.WaitGroup
